@@ -2,10 +2,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
-import { collection, query, where, onSnapshot, getDocs, orderBy } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
 import { teamUI } from './main.js';
+import { teamAdminUI } from './admin.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,9 +32,40 @@ const q = query(collection(db, "Team"), orderBy("anzahl","desc"));
       console.log(doc.data().anzahl)
         teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
     });
-    
     teamUI(teams);
   });
   ;
 
 }
+
+export async function showTeams(){
+  const q = query(collection(db, "Team"), orderBy("name"));
+    return onSnapshot(q, (querySnapshot) => {
+      const teams = [];
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data().anzahl)
+          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
+      });
+      teamAdminUI(teams);
+    });
+    ;
+  
+  }
+
+  export async function updateDrinks(id){
+
+      const teamDrinks = doc(db, "Team", id.replace('plus-','').replace('minus-',''));
+      if(id.startsWith('plus-')){
+        
+        await updateDoc(teamDrinks, {
+          anzahl: increment(1)
+        });
+      }else
+      {
+        await updateDoc(teamDrinks, {
+          anzahl: increment(-1)
+        });
+      }   
+    }
+
+
