@@ -1,13 +1,18 @@
-import { showTeams, updateDrinks } from './firebase.js';
+import { showTeams, updateDrinks, teams } from './firebase.js';
 
-var teams=[];
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 //document.addEventListener('load', changeRanking());
-window.addEventListener('load', (e)=>{showTeams()});
+window.addEventListener('load', ()=>{teamAdminUI();});
 
 
-export async function teamAdminUI(teams){
+ function teamAdminUI(){
     var body='';
     var i=1;
+    
+    (a)=>{ showTeams().then((a)=>{
+    console.log(a)
     teams.forEach((doc) => {
         body = body + '<div class="column col-xl-3 col-12 col-md-6 col-sm-12"><div class="empty">'
         body = body + '<div class="empty-icon">'
@@ -34,6 +39,7 @@ export async function teamAdminUI(teams){
     for (var i = 0; i < minus.length; i++) {
         minus[i].addEventListener('click', (e)=>{doUpdate(e)});
     }
+})};
 }
 
 

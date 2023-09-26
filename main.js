@@ -1,8 +1,8 @@
-import { changeRanking } from './firebase.js';
+import { showTeams } from './firebase.js';
 
 var teams=[];
 //document.addEventListener('load', changeRanking());
-window.addEventListener('load', (e)=>{changeRanking()});
+//window.addEventListener('load', (e)=>{showTeams()});
 
 
 

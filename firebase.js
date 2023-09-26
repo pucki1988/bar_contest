@@ -5,8 +5,8 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase
 import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
-import { teamUI } from './main.js';
-import { teamAdminUI } from './admin.js';
+//import { teamUI } from './main.js';
+//import { teamAdminUI } from './admin.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,32 +24,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function changeRanking(){
-const q = query(collection(db, "Team"), orderBy("anzahl","desc"));
-  return onSnapshot(q, (querySnapshot) => {
-    const teams = [];
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data().anzahl)
-        teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
-    });
-    teamUI(teams);
-  });
-  ;
+export const teams=[];
 
-}
-
-export async function showTeams(){
-  const q = query(collection(db, "Team"), orderBy("name"));
-    return onSnapshot(q, (querySnapshot) => {
-      const teams = [];
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data().anzahl)
-          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
-      });
-      teamAdminUI(teams);
-    });
-    ;
+export async function showTeams(admin = false){
+  var q;
+  if(admin){
+    q = query(collection(db, "Team"), orderBy("name"));
+  }else{
+    q = query(collection(db, "Team"), orderBy("anzahl","desc"));
+  }
   
+  var unsubscribe  = onSnapshot(q, (querySnapshot) => {
+      
+      querySnapshot.forEach((doc) => {
+          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
+          console.log(doc.id)
+      })
+      
+    }); 
+
+    return 0;
   }
 
   export async function updateDrinks(id){
