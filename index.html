@@ -1,13 +1,15 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    
 </head>
 <body>
 
     <main class="container">
-
+        <div class="columns">
         <div class="column col-6 col-xs-12 mt-2">
             <div class="panel">
                 <div class="panel-header text-center">
@@ -23,9 +25,29 @@
             </div>
 
         </div>
+        <div class="column col-6 col-xs-12 mt-2">
+            <div class="panel">
+                <div class="panel-header text-center">
+                    <figure class="avatar avatar-xl" data-initial="D" style="background-color: #c7dc43;"></figure>
+                    <div class="panel-title h5 mt-10">Drinks</div>
+                    <div class="panel-subtitle">#2023</div>
+                    
+                </div>
+                
+                <div id="drinks" class="panel-body">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
     </main>
     <!--main app-->
     <script type="module" src="./main.js"></script>
+    <script type="module">
+    import { showTeamsUI } from './main.js';
+    document.addEventListener('load', showTeamsUI());
+    </script>
 </body>
 
 </html>

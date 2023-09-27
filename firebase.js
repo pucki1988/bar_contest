@@ -2,11 +2,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
-import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
-//import { teamUI } from './main.js';
-//import { teamAdminUI } from './admin.js';
+import { teamUI, teamAdminUI, drinkUI } from './main.js';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,34 +25,46 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const teams=[];
+export const drinks=[];
 
 export async function showTeams(admin = false){
   var q;
+  
   if(admin){
+    console.log("call admin")
     q = query(collection(db, "Team"), orderBy("name"));
   }else{
+    console.log("call main")
     q = query(collection(db, "Team"), orderBy("anzahl","desc"));
   }
   
-  var unsubscribe  = onSnapshot(q, (querySnapshot) => {
-      
-      querySnapshot.forEach((doc) => {
-          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl});
-          console.log(doc.id)
+
+    onSnapshot(q, (querySnapshot) => {
+       teams.length=0;
+       querySnapshot.forEach((doc) => {
+          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl,lastDrink: doc.data().lastDrink});
+          console.log(doc.data())
       })
-      
+
+      if(admin){
+        teamAdminUI();
+      }else{
+        teamUI();
+      }
     }); 
 
-    return 0;
+    
+
   }
 
-  export async function updateDrinks(id){
+  export async function updateDrinkCounter(id){
 
       const teamDrinks = doc(db, "Team", id.replace('plus-','').replace('minus-',''));
       if(id.startsWith('plus-')){
         
         await updateDoc(teamDrinks, {
-          anzahl: increment(1)
+          anzahl: increment(1),
+          lastDrink: serverTimestamp()
         });
       }else
       {
@@ -62,4 +74,19 @@ export async function showTeams(admin = false){
       }   
     }
 
+
+
+export async function showDrinks(admin = false){
+
+  const q = query(collection(db, "Drink"));
+
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((doc) => {
+    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price});
+    console.log(doc.id, " => ", doc.data());
+  })
+  drinkUI();
+  
+}
 
