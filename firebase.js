@@ -1,11 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { getAuth, signInWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
-import { teamUI, teamAdminUI, drinkUI } from './main.js';
+import { teamUI, teamAdminUI, drinkUI,loginUI } from './main.js';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -91,5 +92,31 @@ export async function showDrinks(admin = false){
   drinkUI();
   }
   
+}
+
+
+export async function login(email,password){
+  const auth = getAuth();
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    
+    const user = userCredential.user;
+    
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+}
+
+
+export async function logout(){
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    loginUI();
+  }).catch((error) => {
+    
+  });
 }
 

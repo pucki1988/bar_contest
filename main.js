@@ -1,9 +1,33 @@
-import { showTeams,teams,updateDrinkCounter,showDrinks,drinks } from './firebase.js';
+import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout } from './firebase.js';
 
 
 export function showTeamsUI(admin){
   document.addEventListener('load', showTeams(admin),showDrinks(admin));
 }
+
+
+export async function loginUI(){
+
+  document.getElementById("teams").innerHTML='';
+  document.getElementById("logged-in").innerHTML='';
+  var body='<div class="form-group"><label class="form-label" for="input-email">E-Mail</label><input class="form-input" type="email" id="email" placeholder="E-Mail"/></div>';
+  body= body + '<div class="form-group"><label class="form-label" for="input-email">Passwort</label><input class="form-input" type="password" id="passwort" placeholder="Passwort"></div>';
+  body= body + '<div class="form-group"><input class="btn" type="submit" value="Login" id="submit-login"></div>';
+  document.getElementById("login-ui").innerHTML=body;
+
+  document.getElementById("submit-login").addEventListener('click', (e)=>{login(document.getElementById("email").value,document.getElementById("passwort").value)});
+  
+  
+}
+
+export async function showLoggedInUI(user){
+  document.getElementById("login-ui").innerHTML='';
+
+  document.getElementById("logged-in").innerHTML=user.email + '<input type="submit" id="logout" class="btn ml-1" value="Logout"/>';
+
+  document.getElementById('logout').addEventListener('click', () => logout());
+}
+
 
 
 export async function teamUI(){
@@ -43,7 +67,7 @@ export async function drinkUI(){
     });
 
   document.getElementById("drinks").innerHTML=body
-
+    
 }   
 
 

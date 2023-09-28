@@ -2,14 +2,40 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8">
+    
+
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
     <link rel="stylesheet" href="./css/style.css">
+    
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDvGsIMC3L6OIt0dpecpR7D-Yc6dB24RS8",
+    authDomain: "bar-contest.firebaseapp.com",
+    projectId: "bar-contest",
+    storageBucket: "bar-contest.appspot.com",
+    messagingSenderId: "601029126652",
+    appId: "1:601029126652:web:af1a4bbfa888b38888aa79"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+</script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth__de.js"></script>
+
+
+
 </head>
 <body>
-
+    <div id="logged-in" class="column col-12 text-right bg-secondary py-1"></div>
     <main class="container">
+        <div id="login-ui" class="column col-xl-4 col-4 col-md-6 col-sm-12 col-xs-12 col-mx-auto text-center"></div>
         <div id="teams" class="columns">
             
         </div>
@@ -17,8 +43,19 @@
     <!--main app-->
     <script type="module" src="./main.js"></script>
     <script type="module">
-        import { showTeamsUI } from './main.js';
-        document.addEventListener('load', showTeamsUI(true));
+        import { showTeamsUI,loginUI,showLoggedInUI } from './main.js';
+        auth.onAuthStateChanged(user=>{
+            if(user){
+                    showLoggedInUI(user);
+                    showTeamsUI(true);
+            }
+            else{
+                loginUI();
+            }
+        })
+
+
+        
     </script>
 </body>
 
