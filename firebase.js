@@ -42,8 +42,8 @@ export async function showTeams(admin = false){
     onSnapshot(q, (querySnapshot) => {
        teams.length=0;
        querySnapshot.forEach((doc) => {
-          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl,lastDrink: doc.data().lastDrink});
-          console.log(doc.data())
+          teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl,lastDrink: doc.data().lastDrink,startDrinking: doc.data().startDrinking});
+          
       })
 
       if(admin){
@@ -86,7 +86,10 @@ export async function showDrinks(admin = false){
     drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price});
     console.log(doc.id, " => ", doc.data());
   })
+
+  if(!admin){
   drinkUI();
+  }
   
 }
 
