@@ -84,7 +84,7 @@ export async function showDrinks(admin = false){
   const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach((doc) => {
-    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price});
+    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ});
     console.log(doc.id, " => ", doc.data());
   })
 

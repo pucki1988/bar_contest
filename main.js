@@ -58,15 +58,31 @@ export async function teamUI(){
 
 export async function drinkUI(){
 
+  var mix='';
+  var pur='';
+  var bier =''
   var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Getränk</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Preis</div></div>';
   var i=1;
   drinks.forEach((doc) => {
-      body = body + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+
+      switch(doc.typ){
+        case 'mix':
+          mix = mix + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+        break;
+        case 'pur':
+            pur = pur + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+        break;
+        case 'bier':
+            bier = bier + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+        break;
+
+      }
+      
 
       i++;
     });
 
-  document.getElementById("drinks").innerHTML=body
+  document.getElementById("drinks").innerHTML=body + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Mixgetränke</div></div>' + mix +'<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Kurze</div></div>' + pur + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Bier</div></div>'+ bier
     
 }   
 
