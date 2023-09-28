@@ -26,20 +26,22 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const teams=[];
+let teamsPre=[];
 export const drinks=[];
 
 export async function showTeams(admin = false){
   var q;
   
   if(admin){
-    console.log("call admin")
+    
     q = query(collection(db, "Team"), orderBy("name"));
   }else{
-    console.log("call main")
+    
     q = query(collection(db, "Team"), orderBy("anzahl","desc"));
   }
   
-
+  teamsPre=teams;
+  
     onSnapshot(q, (querySnapshot) => {
        teams.length=0;
        querySnapshot.forEach((doc) => {
@@ -50,7 +52,23 @@ export async function showTeams(admin = false){
       if(admin){
         teamAdminUI();
       }else{
-        teamUI();
+
+
+        var change=false;
+        for(let i=0;i<teams.length;i++){
+          if(teams[i].id != teamsPre[i].id){
+            change=true;
+          }
+        }
+
+        if(teams.length != teamsPre.length || change){
+          console.log("change")
+          teamUI(true);
+        }else{
+          console.log("nochange")
+          teamUI();
+        }
+        
       }
     }); 
 

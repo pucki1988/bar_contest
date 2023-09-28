@@ -1,13 +1,17 @@
 
 .team{
-    animation-timing-function: ease-in;   
+    animation-timing-function: ease-in; 
+}
+
+#teams{
+    overflow: hidden;
 }
 
 @keyframes fadeIn {
     0%{
-        transform: translateX(-100%);
+        transform: translateY(1000%);
     }
     100%{
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }

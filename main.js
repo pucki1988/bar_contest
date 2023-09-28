@@ -30,15 +30,20 @@ export async function showLoggedInUI(user){
 
 
 
-export async function teamUI(){
+export async function teamUI(change=false){
 
   //var body='';
   var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Team</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Getränke</div></div>';
   var i=1;
   var anz= teams.length;
+  var animation='';
+
+  if(change){
+    animation='animation-name: fadeIn;';
+  }
 
   teams.forEach((doc) => {
-      body = body + '<div  style="animation: fadeIn '+anz+'s;" class="team tile tile-centered bg-gray mb-2 p-2"><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
+      body = body + '<div  style="animation-duration:'+i+'s; '+animation+'" class="team tile tile-centered bg-gray mb-2 p-2"><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
       
       body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #5755d9;"></figure>letzter Drink <input hidden class="lastDrink" id="tdb-'+doc.id+'" value="' + doc.lastDrink.toMillis() + '" /><span class="mx-1" id="tval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
       body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure>alle <input hidden class="startDrinking" id="adb-'+doc.id+'" value="' + doc.startDrinking.toMillis() + '" /><input hidden id="aadb-'+doc.id+'" value="' + doc.anzahl + '" /><span class="mx-1" id="aval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
