@@ -33,7 +33,7 @@ export async function showLoggedInUI(user){
 export async function teamUI(){
 
   //var body='';
-  var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Team</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Drinks</div></div>';
+  var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Team</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Getränke</div></div>';
   var i=1;
   var anz= teams.length;
 
