@@ -1,4 +1,4 @@
-import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout } from './firebase.js';
+import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout,addTeam } from './firebase.js';
 
 
 export function showTeamsUI(admin){
@@ -23,7 +23,12 @@ export async function loginUI(){
 export async function showLoggedInUI(user){
   document.getElementById("login-ui").innerHTML='';
 
-  document.getElementById("logged-in").innerHTML=user.email + '<input type="submit" id="logout" class="btn ml-1" value="Logout"/>';
+  document.getElementById("logged-in").innerHTML='<a class="btn mr-2" id="addTeamModalButton">Neues Team</a>' + user.email + '<input type="submit" id="logout" class="btn ml-1" value="Logout"/>';
+
+  document.getElementById("addTeamModalButton").addEventListener('click', ()=>document.getElementById("add-team-modal").classList.add("active"));
+  document.getElementById("add-team-modal-close").addEventListener('click', ()=>document.getElementById("add-team-modal").classList.remove("active"));
+  
+  document.getElementById("submit-add-team").addEventListener('click', () => { addTeam(document.getElementById("teamname").value)});
 
   document.getElementById('logout').addEventListener('click', () => logout());
 }
@@ -34,7 +39,8 @@ export async function teamUI(change=false){
 
   //var body='';
   var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Team</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Getränke</div></div>';
-  var i=1;
+  var i=0.5;
+  var counter=1;
   var anz= teams.length;
   var animation='';
 
@@ -43,15 +49,16 @@ export async function teamUI(change=false){
   }
 
   teams.forEach((doc) => {
-      body = body + '<div  style="animation-duration:'+i+'s; '+animation+'" class="team tile tile-centered bg-gray mb-2 p-2"><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
+      body = body + '<div  style="animation-duration:'+i+'s; '+animation+'" class="team tile tile-centered bg-gray mb-2 p-2"><figure class="avatar avatar-lg" data-initial="' + counter + '" style="background-color: #5755d9;"></figure><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
       
-      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #5755d9;"></figure>letzter Drink <input hidden class="lastDrink" id="tdb-'+doc.id+'" value="' + doc.lastDrink.toMillis() + '" /><span class="mx-1" id="tval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
-      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure>alle <input hidden class="startDrinking" id="adb-'+doc.id+'" value="' + doc.startDrinking.toMillis() + '" /><input hidden id="aadb-'+doc.id+'" value="' + doc.anzahl + '" /><span class="mx-1" id="aval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
+      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure>letzter Drink <input hidden class="lastDrink" id="tdb-'+doc.id+'" value="' + doc.lastDrink.toMillis() + '" /><span class="mx-1" id="tval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
+      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure><input hidden class="startDrinking" id="adb-'+doc.id+'" value="' + doc.startDrinking.toMillis() + '" /><input hidden id="aadb-'+doc.id+'" value="' + doc.anzahl + '" /><span class="mx-1" id="aval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
       
       body = body + '</div></div><div class="tile-action"><figure class="avatar text-light  avatar-xl bg-dark" data-initial="'+doc.anzahl+'" style="background-color: #c7dc43;"></figure></div></div>';
 
-      i++;
+      i= i + 0.5;
       anz=anz-1
+      counter++;
     });
 
   document.getElementById("teams").innerHTML=body
@@ -89,7 +96,9 @@ export async function drinkUI(){
 
   document.getElementById("drinks").innerHTML=body + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Mixgetränke</div></div>' + mix +'<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Kurze</div></div>' + pur + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Bier</div></div>'+ bier
     
-}   
+}
+
+
 
 
 export async function teamAdminUI(){
@@ -97,12 +106,13 @@ export async function teamAdminUI(){
   var i=1;
   
   teams.forEach((doc) => {
-      body = body + '<div id="team-'+i+'" class="column col-3 col-xl-3 col-12 col-md-4 col-sm-6 col-xs-12 mb-2 mt-2"><div class="empty">'
+      body = body + '<div id="team-'+i+'" class="column col-3 col-xl-3 col-12 col-md-4 col-sm-6 col-xs-12 mt-1 px-1"><div class="empty p-2">'
+      body = body + '<p class="empty-title h5">'+ doc.name + '</p><div class="empty-action">'
       body = body + '<div class="empty-icon">'
       body = body + '<button id="minus-'+doc.id+'" class="btn btn-error btn-lg minus-drink mr-2"><i class="icon icon-minus"></i></button>'
       body = body + '<figure class="avatar avatar-xl" data-initial="'+doc.anzahl+'" style="background-color: #5755d9;"></figure>'
       body = body + '<button id="plus-'+doc.id+'" class="btn btn-success btn-lg plus-drink ml-2"><i class="icon icon-plus"></i></button></div>'
-      body = body + '<p class="empty-title h5">'+ doc.name + '</p><div class="empty-action">'
+      
      
      
       body = body +  '</div></div></div>'
@@ -202,9 +212,15 @@ function getAverage(){
   for (var i = 0; i < slides.length; i++) {
     var zeitraum=Math.floor((Date.now() - slides.item(i).value) / 60000);
 
-    var erg=Math.floor(zeitraum/document.getElementById(slides.item(i).id.replace("adb-","aadb-")).value);
+    if(document.getElementById(slides.item(i).id.replace("adb-","aadb-")).value ==0){
+      document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "keine Angabe ";
+    }else{
+      var erg=Math.floor(zeitraum/document.getElementById(slides.item(i).id.replace("adb-","aadb-")).value);
+      document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "alle " + erg + " Minuten";
+    }
     
-    document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  erg + " Minuten";
+    
+    
 
     /*
     if(minute >=60){

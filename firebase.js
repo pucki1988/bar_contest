@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
 import { teamUI, teamAdminUI, drinkUI,loginUI } from './main.js';
@@ -26,7 +26,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const teams=[];
-let teamsPre=[];
+
+
+
 export const drinks=[];
 
 export async function showTeams(admin = false){
@@ -40,28 +42,45 @@ export async function showTeams(admin = false){
     q = query(collection(db, "Team"), orderBy("anzahl","desc"));
   }
   
-  teamsPre=teams;
+
+
+  
+
   
     onSnapshot(q, (querySnapshot) => {
+
+      var anzTeamsPre=teams.length;
+      var teamsPre=[]
+      teamsPre.length=0
+      
+      teams.forEach(team => {
+        teamsPre.push({id:team.id});
+      });
+      console.log(teamsPre);
+
        teams.length=0;
        querySnapshot.forEach((doc) => {
           teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl,lastDrink: doc.data().lastDrink,startDrinking: doc.data().startDrinking});
           
       })
-
+      console.log(teams);
       if(admin){
         teamAdminUI();
       }else{
 
 
         var change=false;
-        for(let i=0;i<teams.length;i++){
-          if(teams[i].id != teamsPre[i].id){
-            change=true;
+        if(teamsPre.length>0){
+          for(let i=0;i<teams.length;i++){
+            
+              if(teams[i].id != teamsPre[i].id){
+                change=true;
+              }
+            
           }
         }
 
-        if(teams.length != teamsPre.length || change){
+        if(teams.length != anzTeamsPre || change){
           console.log("change")
           teamUI(true);
         }else{
@@ -92,6 +111,23 @@ export async function showTeams(admin = false){
         });
       }   
     }
+
+export async function addTeam(name){
+  const docRef = await addDoc(collection(db, "Team"), {
+    name: name,
+    anzahl: 0,
+    lastDrink: serverTimestamp(),
+    startDrinking: serverTimestamp()
+  }).then(()=>{
+
+    document.getElementById("teamname").value='';
+    document.getElementById("add-team-modal").classList.remove("active");
+  });
+
+  
+
+
+  }
 
 
 
