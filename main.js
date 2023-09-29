@@ -28,6 +28,7 @@ export async function showLoggedInUI(user){
   document.getElementById("addTeamModalButton").addEventListener('click', ()=>document.getElementById("add-team-modal").classList.add("active"));
   document.getElementById("add-team-modal-close").addEventListener('click', ()=>document.getElementById("add-team-modal").classList.remove("active"));
   
+  document.getElementById("add-drink-modal-close").addEventListener('click', ()=>document.getElementById("add-drink-modal").classList.remove("active"));
   document.getElementById("submit-add-team").addEventListener('click', () => { addTeam(document.getElementById("teamname").value)});
 
   document.getElementById('logout').addEventListener('click', () => logout());
@@ -128,6 +129,7 @@ export async function teamAdminUI(){
 
   for (var i = 0; i < plus.length; i++) {
       plus[i].addEventListener('click', (e)=>{doUpdate(e)});
+      plus[i].addEventListener('long-press', (e) =>{showAddDrinksModal(e)});
   }
   for (var i = 0; i < minus.length; i++) {
       minus[i].addEventListener('click', (e)=>{doUpdate(e)});
@@ -154,12 +156,26 @@ function show() {
   }
 }
 
+function showAddDrinksModal(e){
+
+  document.getElementById("add-anzahl-teamId").value=''
+  document.getElementById("add-anzahl").value=0;
+  document.getElementById("add-drink-modal").classList.add("active");
+
+  const isButton = e.target.nodeName === 'BUTTON';
+  if(!isButton) {
+    document.getElementById("add-anzahl-teamId").value = e.target.parentNode.id;
+  }else{
+    document.getElementById("add-anzahl-teamId").value=e.target.id;
+  }
+  document.getElementById("submit-add-drink").addEventListener('click',(e)=>{updateDrinkCounter(document.getElementById("add-anzahl-teamId").value,document.getElementById("add-anzahl").value).then(document.getElementById("add-drink-modal").classList.remove("active"));});
+}
+
 
 function doUpdate(e)
 {
   const isButton = e.target.nodeName === 'BUTTON';
-
-  if(!isButton) {
+    if(!isButton) {
       updateDrinkCounter(e.target.parentNode.id)
   }else{
       updateDrinkCounter(e.target.id)
@@ -219,24 +235,6 @@ function getAverage(){
       document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "alle " + erg + " Minuten";
     }
     
-    
-    
-
-    /*
-    if(minute >=60){
-      var hour=Math.floor(minute/60);
-      if (hour==1){
-        document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML = "vor über " + hour + " Stunde";
-      }else{
-        document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML = "vor über " + hour + " Stunden";
-      }
-    }else{
-      if (minute==1){
-        document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML = "vor " + minute + " Minute";
-      }else{
-        document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML = "vor " + minute + " Minuten";
-      }
-    }*/
 }
 }
 

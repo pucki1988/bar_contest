@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc,getDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
 import { teamUI, teamAdminUI, drinkUI,loginUI } from './main.js';
@@ -56,14 +56,14 @@ export async function showTeams(admin = false){
       teams.forEach(team => {
         teamsPre.push({id:team.id});
       });
-      console.log(teamsPre);
+      
 
        teams.length=0;
        querySnapshot.forEach((doc) => {
           teams.push({id:doc.id,name:doc.data().name,anzahl:doc.data().anzahl,lastDrink: doc.data().lastDrink,startDrinking: doc.data().startDrinking});
           
       })
-      console.log(teams);
+  
       if(admin){
         teamAdminUI();
       }else{
@@ -95,13 +95,18 @@ export async function showTeams(admin = false){
 
   }
 
-  export async function updateDrinkCounter(id){
+  export async function updateDrinkCounter(id,inc_anzahl=1){
 
       const teamDrinks = doc(db, "Team", id.replace('plus-','').replace('minus-',''));
+
+      const docSnap= await getDoc(teamDrinks);
+      
+      //console.log(docSnap.data().anzahl + inc_anzahl);
+
+
       if(id.startsWith('plus-')){
-        
-        await updateDoc(teamDrinks, {
-          anzahl: increment(1),
+        await updateDoc(teamDrinks, { 
+          anzahl: (parseInt(docSnap.data().anzahl) + parseInt(inc_anzahl)),
           lastDrink: serverTimestamp()
         });
       }else
@@ -139,7 +144,6 @@ export async function showDrinks(admin = false){
 
   querySnapshot.forEach((doc) => {
     drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ});
-    console.log(doc.id, " => ", doc.data());
   })
 
   if(!admin){
