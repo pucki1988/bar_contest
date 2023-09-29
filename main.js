@@ -107,12 +107,12 @@ export async function teamAdminUI(){
   var i=1;
   
   teams.forEach((doc) => {
-      body = body + '<div id="team-'+i+'" class="column col-3 col-xl-3 col-12 col-md-4 col-sm-6 col-xs-12 mt-1 px-1"><div class="empty p-2">'
+      body = body + '<div id="team-'+i+'" class="column col-3 col-xl-3 col-12 col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 px-1"><div class="empty p-2">'
       body = body + '<p class="empty-title h5">'+ doc.name + '</p><div class="empty-action">'
       body = body + '<div class="empty-icon">'
-      body = body + '<button id="minus-'+doc.id+'" class="btn btn-error btn-lg minus-drink mr-2"><i class="icon icon-minus"></i></button>'
+      body = body + '<button id="minus-'+doc.id+'" class="btn btn-error btn-lg minus-drink mr-1"><i class="icon icon-minus"></i></button>'
       body = body + '<figure class="avatar avatar-xl" data-initial="'+doc.anzahl+'" style="background-color: #5755d9;"></figure>'
-      body = body + '<button id="plus-'+doc.id+'" class="btn btn-success btn-lg plus-drink ml-2"><i class="icon icon-plus"></i></button></div>'
+      body = body + '<button id="plus-'+doc.id+'" class="btn btn-success btn-lg plus-drink ml-1"><i class="icon icon-plus"></i></button></div>'
       
      
      
