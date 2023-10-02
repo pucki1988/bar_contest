@@ -50,12 +50,12 @@ export async function teamUI(change=false){
   }
 
   teams.forEach((doc) => {
-      body = body + '<div  style="animation-duration:'+i+'s; '+animation+'" class="team tile tile-centered bg-gray mb-2 p-2"><figure class="avatar avatar-lg" data-initial="' + counter + '" style="background-color: #5755d9;"></figure><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
+      body = body + '<div  style="animation-duration:'+i+'s; '+animation+'" class="team tile tile-centered bg-gray mb-2 p-2"><figure class="avatar avatar-lg" data-initial="' + counter + '" style="background-color: #5755d9;border-radius:0 !important;"></figure><div class="tile-content"><div class="text-bold h4">'+ doc.name +'</div><div class="tile-subtitle my-2 mx-1">';
       
-      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure>letzter Drink <input hidden class="lastDrink" id="tdb-'+doc.id+'" value="' + doc.lastDrink.toMillis() + '" /><span class="mx-1" id="tval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
+      body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure>letztes Getränk <input hidden class="lastDrink" id="tdb-'+doc.id+'" value="' + doc.lastDrink.toMillis() + '" /><span class="mx-1" id="tval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
       body = body + '<div class="chip"><figure class="avatar avatar-sm" data-initial="" style="background-color: #c7dc43;"></figure><input hidden class="startDrinking" id="adb-'+doc.id+'" value="' + doc.startDrinking.toMillis() + '" /><input hidden id="aadb-'+doc.id+'" value="' + doc.anzahl + '" /><span class="mx-1" id="aval-'+ doc.id +'"><div class="loading" style="margin-left:.6rem"></div></span></div>';
       
-      body = body + '</div></div><div class="tile-action"><figure class="avatar text-light  avatar-xl bg-dark" data-initial="'+doc.anzahl+'" style="background-color: #c7dc43;"></figure></div></div>';
+      body = body + '</div></div><div class="tile-action"><figure class="avatar text-light  avatar-xl bg-dark" data-initial="'+doc.anzahl+'" style="background-color: #c7dc43;border-radius:0 !important;"></figure></div></div>';
 
       i= i + 0.5;
       anz=anz-1
@@ -80,13 +80,13 @@ export async function drinkUI(){
 
       switch(doc.typ){
         case 'mix':
-          mix = mix + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+          mix = mix + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
         break;
         case 'pur':
-            pur = pur + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+            pur = pur + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
         break;
         case 'bier':
-            bier = bier + '<div class="tile tile-centered bg-gray mb-2 px-2 py-1"><div class="tile-content"><div class="h5">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
+            bier = bier + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
         break;
 
       }
@@ -95,7 +95,7 @@ export async function drinkUI(){
       i++;
     });
 
-  document.getElementById("drinks").innerHTML=body + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Mixgetränke</div></div>' + mix +'<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Kurze</div></div>' + pur + '<div class="tile tile-centered bg-primary mb-2 px-2 py-1"><div class="tile-content">Bier</div></div>'+ bier
+  document.getElementById("drinks").innerHTML=body + '<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Mixgetränke</div></div>' + mix +'<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Kurze</div></div>' + pur + '<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Bier</div></div>'+ bier
     
 }
 
@@ -232,7 +232,7 @@ function getAverage(){
       document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "keine Angabe ";
     }else{
       var erg=Math.floor(zeitraum/document.getElementById(slides.item(i).id.replace("adb-","aadb-")).value);
-      document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "alle " + erg + " Minuten";
+      document.getElementById(slides.item(i).id.replace("adb-","aval-")).innerHTML =  "alle " + erg + " Minuten ein Getränk";
     }
     
 }
