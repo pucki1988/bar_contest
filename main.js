@@ -1,10 +1,13 @@
-import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout,addTeam } from './firebase.js';
+import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout,addTeam,visitorCount,plusVisitor,minusVisitor,visitors, getVisitorsCount,getVisitorsList } from './firebase.js';
 
 
 export function showTeamsUI(admin){
   document.addEventListener('load', showTeams(admin),showDrinks(admin));
 }
 
+export function showVisitorsUI(){
+  document.addEventListener('load', getVisitorsCount(), getVisitorsList());
+}
 
 export async function loginUI(){
 
@@ -136,6 +139,58 @@ export async function teamAdminUI(){
   }
 
   fadeIn();
+
+}
+
+
+
+export async function visitorCountUI(){
+      var body='';
+  
+      body = body + '<div id="visitor" class="column col-12 mt-1 px-1"><div class="empty p-2">'
+      body = body + '<p class="empty-title h5">Besucher</p><div class="empty-action">'
+      body = body + '<div class="empty-icon">'
+      body = body + '<button id="minus-visitor" class="btn btn-error btn-lg minus-drink mr-1"><i class="icon icon-minus"></i></button>'
+      body = body + '<figure class="avatar avatar-xl" data-initial="'+ visitorCount +'" style="background-color: #5755d9;"></figure>'
+      body = body + '<button data-long-press-delay="500" id="plus-visitor" class="btn btn-success btn-lg plus-drink ml-1"><i class="icon icon-plus"></i></button></div>'
+      
+     
+     
+      body = body +  '</div></div></div>'
+
+      
+    
+
+  document.getElementById("visitors-count").innerHTML=body
+  
+  document.getElementById("minus-visitor").addEventListener('click', (e)=>{minusVisitor()});
+  document.getElementById("plus-visitor").addEventListener('click', (e)=>{plusVisitor()});
+
+}
+
+
+export async function visitorListUI(){
+  
+  var body='';
+  var anz= visitors.length
+
+  body = body + '<div class="column col-12">'
+  visitors.forEach((doc) =>  {
+    
+    body = body + '<div class="tile tile-centered bg-secondary mt-2">'
+    body = body + '<div class="tile-icon"><figure class="avatar avatar-lg" style="border-radius:0" data-initial="' + anz +'" style="background-color: #5755d9;"></figure></div>'
+    body = body + '<div class="tile-content"><div class="tile-title">' + doc.checkIn + '</div></div>'
+
+    body = body + '</div>'
+    anz--;
+  });
+
+  body = body + '</div>'
+
+
+  document.getElementById("visitors-list").innerHTML=body
+
+
 
 }
 

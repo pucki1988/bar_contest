@@ -9,114 +9,32 @@
     <script src="https://kit.fontawesome.com/1342749832.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-    <main class="container">
-        <div class="columns">
-        <div class="column col-6 col-xs-12 mt-2">
-            <div class="panel">
-                <div class="panel-header text-center py-0 px-0">
-                    
-                    <div class="bg-secondary py-2" style="border-bottom: 1px solid #303742;">
-                    <figure class="avatar avatar-xl" data-initial="R" style="background-color: #fff;">
-                        <img src="images/logo1.png" alt="...">
-                    </figure>
-                    <div class="panel-title h5 mt-10">Bar Contest</div>
-                    <div class="panel-subtitle">#Ranking</div>
-                    </div>
-                    
-                </div>
-                
-                <div id="teams" class="panel-body px-0">
-
-                </div>
-            </div>
-
+    <header class="bg-dark py-2">
+        <div class="container text-center" style="max-width: 1400px;">
+        <div class="h4">Ruamzuzla Ball 2023</div>
         </div>
-        <div class="column col-3 col-xs-12 mt-2">
-            <div class="panel">
-                <div class="panel-header text-center py-0 px-0">
-                    <div class="bg-secondary py-2" style="border-bottom: 1px solid #303742;">
-                    <figure class="avatar avatar-xl" data-initial="G" style="background-color: #fff;">
-                        <img src="images/logo1.png" alt="...">
-                    </figure>
-                    <div class="panel-title h5 mt-10">Getränke</div>
-                    <div class="panel-subtitle">#2023</div>
-                    </div>
-                </div>
-                
-                <div id="drinks" class="panel-body px-0">
-
-                </div>
-            </div>
-            
-        </div>
-        <div class="column col-3 col-xs-12 mt-2">
-            <div class="panel">
-                <div class="panel-header text-center py-0 px-0">
-                    <div class="bg-secondary py-2" style="border-bottom: 1px solid #303742;">
-                        <figure class="avatar avatar-xl" data-initial="G" style="background-color: #fff;">
-                            <img src="images/logo1.png" alt="...">
-                        </figure>
-                    <div class="panel-title h5 mt-10">Würfeln</div>
-                    <div class="panel-subtitle">#Glickssach</div>
-                    </div>
-                </div>
-                
-                <div id="dice" class="panel-body px-0">
-                    <div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content text-center"><div class="text-bold">22:00 - 22:30 || 00:00 - 00:30</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold"></div></div>
+    </header>
+    <main class="container" style="max-width: 1400px;">
+        <div id="visitors-count" class="columns">
                     
-                    <div class="empty bg-success">
-                        <div class="empty-icon h4">
-                            <i class="fa-solid fa-dice-one fa-2xl" style="color: #fff;"></i> oder 
-                            <i class="fa-solid fa-dice-two fa-2xl" style="color: #fff;"></i>
-                        </div>
-                        <p class="empty-title h5"></p>
-                        <div class="empty-action">
-                            <div class="p-2 d-inline-block" style="border:1px solid"><i class="fa-solid fa-minus fa-2xl" style="color: #fff;"></i> 1 €</div>
-                        </div>
-                    </div>
-                    <div class="empty">
-                        <div class="empty-icon h4">
-                            <i class="fa-solid fa-dice-three fa-2xl" style="color: #303742;"></i> oder
-                            <i class="fa-solid fa-dice-four fa-2xl" style="color: #303742;"></i>
-                        </div>
-                        <p class="empty-title h5"></p>
-                        <div class="empty-action">
-                            <div class="p-2 d-inline-block" style="border:1px solid">gleicher Preis</div>
-                        </div>
-                    </div>
-                    <div class="empty bg-error">
-                        <div class="empty-icon h4">
-                            <i class="fa-solid fa-dice-five fa-2xl" style="color: #fff;"></i> oder 
-                            <i class="fa-solid fa-dice-six fa-2xl" style="color: #fff;"></i>
-                        </div>
-                        <p class="empty-title h5"></p>
-                        <div class="empty-action">
-                            <div class="p-2 d-inline-block" style="border:1px solid"><i class="fa-solid fa-plus fa-2xl" style="color: #fff;"></i> 1 €</div>
-                        </div>
-                    </div>
-                    <div class="empty bg-dark">
-                        <div class="empty-icon">
-                            <i class="fa-solid fa-question fa-xl"></i>
-                        </div>
-                        <p class="empty-title h5">Wie geht's ?</p>
-                        <p class="empty-subtitle">Frag beim Barkeeper deines Vertrauens nach den Würfeln und fordere die Glücksgöttin Fortuna heraus.</p>
-                        <div class="empty-action">
-                          
-                        </div>
-                      </div>
-                </div>
-            </div>
-
         </div>
-    </div>
+        <div id="visitors-list" class="columns">
+                    
+        </div>
+
     </main>
     <!--main app-->
     <script type="module" src="./main.js"></script>
     <script type="module">
-    import { showTeamsUI } from './main.js';
-    document.addEventListener('load', showTeamsUI());
+        import { showVisitorsUI } from './main.js';
+        document.addEventListener('load', showVisitorsUI());
     </script>
+
+
+    
+
+
+
 </body>
 
 </html>

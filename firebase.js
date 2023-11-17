@@ -3,10 +3,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 import { getAuth, signInWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc,getDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
+import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc,getDoc,getCountFromServer,limit,deleteDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
-import { teamUI, teamAdminUI, drinkUI,loginUI } from './main.js';
+import { teamUI, teamAdminUI, drinkUI,loginUI, visitorCountUI,visitorListUI } from './main.js';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,6 +27,9 @@ const db = getFirestore(app);
 
 export const teams=[];
 
+export var visitorCount=0;
+
+export const visitors=[];
 
 
 export const drinks=[];
@@ -94,6 +97,12 @@ export async function showTeams(admin = false){
     
 
   }
+
+
+
+
+
+
 
   export async function updateDrinkCounter(id,inc_anzahl=1){
 
@@ -178,3 +187,54 @@ export async function logout(){
   });
 }
 
+
+/* Visitor Calls */
+export async function getVisitorsCount(){
+    const coll = collection(db, "Visitor");
+    const snapshot = await getCountFromServer(coll);
+    visitorCount=snapshot.data().count;
+    visitorCountUI();
+}
+
+export async function getVisitorsList(){
+  const q = query(collection(db, "Visitor"), orderBy("checkIn", "desc"));
+  visitors.length=0;
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((a) => {
+
+    var dat=new Date(a.data().checkIn.toMillis())
+
+
+    visitors.push({checkIn: dat.toLocaleString()})
+  });
+
+  visitorListUI();
+}
+
+
+
+export async function plusVisitor(){
+
+  const docRef = await addDoc(collection(db, "Visitor"), {
+    checkIn: serverTimestamp(),
+  }).then((data)=>{
+    getVisitorsCount()
+    getVisitorsList()
+  })
+  .catch((er) =>
+    console.log(er)
+  );
+
+}
+
+export async function minusVisitor(){
+  const q = query(collection(db, "Visitor"), orderBy("checkIn", "desc"), limit(1));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(async (a) => {
+    await deleteDoc(doc(db, "Visitor", a.id)).then(()=>{
+      getVisitorsCount();
+      getVisitorsList();
+    });
+  });
+}
