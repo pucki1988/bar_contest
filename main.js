@@ -5,8 +5,14 @@ export function showTeamsUI(admin){
   document.addEventListener('load', showTeams(admin),showDrinks(admin));
 }
 
+
+
 export function showVisitorsUI(){
   document.addEventListener('load', getVisitorsCount(), getVisitorsList());
+}
+
+export function showDrinksUI(){
+  document.addEventListener('load', showDrinks());
 }
 
 export async function loginUI(){
@@ -75,31 +81,35 @@ export async function teamUI(change=false){
 export async function drinkUI(){
 
   var mix='';
-  var pur='';
-  var bier =''
-  var body='<div class="tile tile-centered bg-secondary mb-1 p-2"><div class="tile-content"><div class="text-bold">Getränk</div><div class="tile-subtitle"></div></div><div class="tile-action text-bold">Preis</div></div>';
+  var menu='';
+  var shot =''
+  var body='';
   var i=1;
   drinks.forEach((doc) => {
 
-      switch(doc.typ){
-        case 'mix':
-          mix = mix + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
-        break;
-        case 'pur':
-            pur = pur + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
-        break;
-        case 'bier':
-            bier = bier + '<div class="tile tile-centered bg-gray mb-1 px-2 py-1"><div class="tile-content"><div class="h4">'+ doc.name +'</div></div><div class="tile-action"><div class="h5 text-light bg-dark py-1 px-2">€ ' + doc.price.toFixed(2).replace('.',',')+'</div></div></div>'
-        break;
+      
+          switch(doc.typ){
+            case "Mixgetränk":
+              mix = mix + '<div class="column col-6 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h5">'+ doc.name +'</div></div><div class="card-footer text-center"><span class="bg-dark px-2 py-1 h4">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+              break;
+            case "Shot":
+                shot = shot + '<div class="column col-12 my-2"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h5">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+                break;
+            case "Menü":
+              menu = menu + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h5">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="bg-dark px-2 py-1 h4">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+              break;
+            }
+         
+            
 
-      }
+      
       
 
       i++;
     });
 
-  document.getElementById("drinks").innerHTML=body + '<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Mixgetränke</div></div>' + mix +'<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Kurze</div></div>' + pur + '<div class="tile tile-centered bg-primary mb-0 px-2 py-1"><div class="tile-content">Bier</div></div>'+ bier
-    
+  document.getElementById("drinks").innerHTML=body + '<div class="columns">' + mix  + '</div>';
+  document.getElementById("menu").innerHTML=body + '<div class="columns">' + menu + shot +'</div>';
 }
 
 

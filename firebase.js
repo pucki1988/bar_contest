@@ -152,7 +152,7 @@ export async function showDrinks(admin = false){
   const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach((doc) => {
-    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ});
+    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ,desc:doc.data().desc});
   })
 
   if(!admin){

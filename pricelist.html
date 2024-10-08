@@ -17,20 +17,28 @@
         <div class="h5">Ruamzuzla Ball 2024</div>
         </div>
     </header>
-    <main class="container" style="max-width: 1400px;">
-        <div id="visitors-count" class="columns">
-                    
+    <main class="container" style="max-width: 100vw">
+        <div class="columns">
+        <div class="column col-8">
+            <div class="h4 text-center">Drinks</div>
+            <div id="drinks">
+                        
+            </div>
         </div>
-        <div id="visitors-list" class="columns">
-                    
+        <div class="column col-4" style="background-color: #c7dc43;">
+            <div class="h4 text-center">Menü's</div>
+            <div id="menu"></div>
+                        
+            </div>
+        </div>
         </div>
 
     </main>
     <!--main app-->
     <script type="module" src="./main.js"></script>
     <script type="module">
-        import { showVisitorsUI } from './main.js';
-        document.addEventListener('load', showVisitorsUI());
+        import { showDrinksUI } from './main.js';
+        document.addEventListener('load', showDrinksUI());
     </script>
 
 
@@ -41,5 +49,3 @@
 </body>
 
 </html>
-
-
