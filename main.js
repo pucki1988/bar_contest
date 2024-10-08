@@ -120,6 +120,7 @@ export async function drinkUI(){
   document.getElementById("non-alc").innerHTML=body + '<div class="columns">' + non_alc  + '</div>';
   document.getElementById("menu").innerHTML=body + '<div class="columns">' + menu + shot +'</div>';
   document.getElementById("mixes").innerHTML=body + '<div class="columns">' + mixes +'</div>';
+  document.getElementById("mixes1").innerHTML=body + '<div class="columns">' + mixes +'</div>';
 }
 
 
