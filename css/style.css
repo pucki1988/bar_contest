@@ -25,3 +25,62 @@
     padding: 1rem 2rem !important;
 }
 
+
+@keyframes stiftung {
+    0% {-moz-transform: scale(1) rotate(10deg);
+        -webkit-transform: scale(1) rotate(10deg);
+        -o-transform: scale(1) rotate(10deg);
+        -ms-transform: scale(1) rotate(10deg);
+        transform: scale(1) rotate(10deg);}
+    50% {-moz-transform: scale(1.03) rotate(8deg);
+        -webkit-transform: scale(1.03) rotate(8deg);
+        -o-transform: scale(1.03) rotate(8deg);
+        -ms-transform: scale(1.03) rotate(8deg);
+        transform: scale(1.03) rotate(8deg);}
+        100% {-moz-transform: scale(1) rotate(10deg);
+            -webkit-transform: scale(1) rotate(10deg);
+            -o-transform: scale(1) rotate(10deg);
+            -ms-transform: scale(1) rotate(10deg);
+            transform: scale(1) rotate(10deg);}
+  }
+
+.stiftung {
+    right: .8rem;
+    top:.5rem;
+    background-color: #c7dc43;
+    text-align: center;
+    padding: .5rem;
+    border-radius: 100px;
+    
+animation-name: stiftung;
+  animation-duration: 4s;
+  animation-iteration-count:infinite
+
+}
+
+.stiftung span {
+    font-size: .5rem;
+    display: block;
+}
+
+
+
+
+.tipp {
+    right: .5rem;
+    top: .2rem;
+    color: #c7dc43;
+    text-align: center;
+    padding: .5rem;
+    border-radius: 100px;
+    -moz-transform: rotate(10deg);
+-webkit-transform: rotate(10deg);
+-o-transform: rotate(10deg);
+-ms-transform: rotate(10deg);
+transform: rotate(10deg);
+}
+
+.tipp span {
+    font-size: .7rem;
+    display: block;
+}

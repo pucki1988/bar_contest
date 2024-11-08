@@ -150,9 +150,8 @@ export async function showDrinks(admin = false){
   const q = query(collection(db, "Drink"));
 
   const querySnapshot = await getDocs(q);
-
   querySnapshot.forEach((doc) => {
-    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ,desc:doc.data().desc});
+    drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ,desc:doc.data().desc,tipp:doc.data().tipp});
   })
 
   if(!admin){

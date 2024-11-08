@@ -85,6 +85,7 @@ export async function drinkUI(){
   var menu='';
   var shot ='';
   var mixes =''
+  var year_special =''
   var body='';
   var i=1;
   drinks.forEach((doc) => {
@@ -98,11 +99,21 @@ export async function drinkUI(){
                 non_alc = non_alc + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div></div></div></div>'
                 break;
               case "shot":
-                shot = shot + '<div class="column col-12 my-2"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+                shot = shot + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div>'
+        
+                if(doc.tipp){
+                  shot = shot + '<div class="tipp" style="position:absolute"><i class="fa-solid fa-star"></i><span>Tipp</span></div>'
+                }
+                shot = shot + '</div>'
+                
+                
                 break;
                 case "mixes":
-                  mixes = mixes + '<div class="column col-12 my-2"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+                  mixes = mixes + '<div class="column col-12 my-0"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h2">'+ doc.name +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h1 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
                   break;
+                case "year_special":
+                  year_special = year_special + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style=";border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div><div class="stiftung" style="position:absolute"><span>Rumazuzla</span><i class="fa-solid fa-thumbs-up"></i><span>geprüft</span></div></div>'
+                    break;
             case "menu":
               menu = menu + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="bg-dark px-2 py-1 h4">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
               break;
@@ -120,7 +131,8 @@ export async function drinkUI(){
   document.getElementById("non-alc").innerHTML=body + '<div class="columns">' + non_alc  + '</div>';
   document.getElementById("menu").innerHTML=body + '<div class="columns">' + menu + shot +'</div>';
   document.getElementById("mixes").innerHTML=body + '<div class="columns">' + mixes +'</div>';
-  document.getElementById("mixes1").innerHTML=body + '<div class="columns">' + mixes +'</div>';
+  document.getElementById("year_special").innerHTML=body + '<div class="columns">' + year_special +'</div>';
+  //document.getElementById("mixes1").innerHTML=body + '<div class="columns">' + mixes +'</div>';
 }
 
 
