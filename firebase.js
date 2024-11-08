@@ -34,6 +34,8 @@ export const visitors=[];
 
 export const drinks=[];
 
+export const drinksPre=[];
+
 export async function showTeams(admin = false){
   var q;
   
@@ -149,14 +151,41 @@ export async function showDrinks(admin = false){
 
   const q = query(collection(db, "Drink"));
 
-  const querySnapshot = await getDocs(q);
+
+  onSnapshot(q, (querySnapshot) => {
+  //const querySnapshot = await getDocs(q);
+
+ drinksPre.length=0;
+ drinks.forEach(drink => {
+  drinksPre.push({id:drink.id,price:drink.price});
+});
+
+  drinks.length=0;
   querySnapshot.forEach((doc) => {
     drinks.push({id:doc.id,name:doc.data().name,price:doc.data().price,typ:doc.data().typ,desc:doc.data().desc,tipp:doc.data().tipp});
   })
-
   if(!admin){
-  drinkUI();
-  }
+
+
+    for(let i=0;i<drinks.length;i++){
+        
+      for(let j=0;j<drinksPre.length;j++){
+        if(drinks[i].id == drinksPre[j].id){
+          if(drinks[i].price < drinksPre[j].price){
+            drinks[i].priceOld=drinksPre[j].price;
+          }
+        }
+      }
+
+    }
+
+    console.log(drinks)
+
+    drinkUI();
+    }
+})
+
+  
   
 }
 

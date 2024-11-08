@@ -87,6 +87,14 @@ export async function drinkUI(){
   var mixes =''
   var year_special =''
   var body='';
+
+  document.getElementById("alc").innerHTML='';
+  document.getElementById("non-alc").innerHTML='';
+  document.getElementById("menu").innerHTML='';
+  document.getElementById("mixes").innerHTML='';
+  document.getElementById("year_special").innerHTML='';
+
+
   var i=1;
   drinks.forEach((doc) => {
 
@@ -99,8 +107,14 @@ export async function drinkUI(){
                 non_alc = non_alc + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div></div></div></div>'
                 break;
               case "shot":
-                shot = shot + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div>'
-        
+                shot = shot + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span>'
+                
+                if(doc.priceOld){
+                shot = shot + '<span class="px-2 py-1 h4 text-dark text-warning" style="position:relative">€ ' + doc.priceOld.toFixed(2).replace('.',',')+'<div class="line2"></div></span>'
+                }
+
+                shot= shot + '</div></div>'
+
                 if(doc.tipp){
                   shot = shot + '<div class="tipp" style="position:absolute"><i class="fa-solid fa-star"></i><span>Tipp</span></div>'
                 }
@@ -109,13 +123,33 @@ export async function drinkUI(){
                 
                 break;
                 case "mixes":
-                  mixes = mixes + '<div class="column col-12 my-0"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h2">'+ doc.name +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h1 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+                  mixes = mixes + '<div class="column col-12 my-0"><div class="card bg-dark" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h2">'+ doc.name +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h1 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span>'
+                  if(doc.priceOld){
+                    mixes = mixes + '<span class="px-2 py-1 h2 text-dark text-warning" style="position:relative">€ ' + doc.priceOld.toFixed(2).replace('.',',')+'<div class="line2"></div></span>'
+                    }
+                    mixes= mixes + '</div></div></div>'
+                  
                   break;
                 case "year_special":
-                  year_special = year_special + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style=";border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div><div class="stiftung" style="position:absolute"><span>Rumazuzla</span><i class="fa-solid fa-thumbs-up"></i><span>geprüft</span></div></div>'
-                    break;
+                  year_special = year_special + '<div class="column col-12 my-2" style="position:relative"><div class="card bg-dark" style=";border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="px-2 py-1 h4 text-dark" style="background-color:#c7dc43">€ ' + doc.price.toFixed(2).replace('.',',')+'</span>'
+                    
+
+                  if(doc.priceOld){
+                    year_special = year_special + '<span class="px-2 py-1 h4 text-dark text-warning" style="position:relative">€ ' + doc.priceOld.toFixed(2).replace('.',',')+'<div class="line2"></div></span>'
+                    }
+                    year_special= year_special + '</div></div>'
+                  
+                    year_special= year_special + '<div class="stiftung" style="position:absolute"><span>Rumazuzla</span><i class="fa-solid fa-thumbs-up"></i><span>geprüft</span></div></div>'
+
+                  break;
             case "menu":
-              menu = menu + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="bg-dark px-2 py-1 h4">€ ' + doc.price.toFixed(2).replace('.',',')+'</span></div></div></div>'
+              menu = menu + '<div class="column col-12 my-2"><div class="card" style="border: 0;box-shadow: 0 .25rem 1rem rgba(48, 55, 66, .15);"><div class="card-header text-center"><div class="card-title h3">'+ doc.name +'</div><div class="card-subtitle text-gray">' + doc.desc +'</div></div><div class="card-footer text-center"><span class="bg-dark px-2 py-1 h4">€ ' + doc.price.toFixed(2).replace('.',',')+'</span>'
+              
+              if(doc.priceOld){
+                menu = menu + '<span class="px-2 py-1 h4 text-dark text-error" style="position:relative">€ ' + doc.priceOld.toFixed(2).replace('.',',')+'<div class="line1"></div></span>'
+                }
+                menu= menu + '</div></div></div>'
+              
               break;
             }
          
