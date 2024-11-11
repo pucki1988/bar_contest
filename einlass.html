@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/1342749832.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="bg-dark py-2">
+        <div class="container text-center" style="max-width: 1400px;">
+            <figure class="avatar avatar-xl" data-initial="R" style="background-color: #fff;">
+                <img src="images/logo1.png" alt="...">
+            </figure>
+        <div class="h5">Ruamzuzla Ball 2024</div>
+        </div>
+    </header>
+    <main class="container" style="max-width: 1400px;">
+        <div id="visitors-count" class="columns">
+                    
+        </div>
+        <div id="visitors-list" class="columns">
+                    
+        </div>
+
+    </main>
+    <!--main app-->
+    <script type="module" src="./main.js"></script>
+    <script type="module">
+        import { showVisitorsUI } from './main.js';
+        document.addEventListener('load', showVisitorsUI());
+    </script>
+
+
+    
+
+
+
+</body>
+
+</html>
+
+
