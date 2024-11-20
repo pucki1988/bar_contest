@@ -10,14 +10,18 @@
 </head>
 <body>
     <header class="bg-dark py-2">
-        <div class="container text-center" style="max-width: 1400px;">
+        <div class="container text-center" style="max-width: 1400px; position: relative;">
             <figure class="avatar avatar-xl" data-initial="R" style="background-color: #fff;">
                 <img src="images/logo1.png" alt="...">
             </figure>
         <div class="h5">Ruamzuzla Ball 2024</div>
+        <div id="export" style="position: absolute; top:10px;right:10px" class="text-right">
+            <a href="#" id="export-csv" class="btn btn-success my-2">CSV</a>
+        </div>
         </div>
     </header>
     <main class="container" style="max-width: 1400px;">
+        
         <div id="visitors-count" class="columns">
                     
         </div>
@@ -25,13 +29,19 @@
                     
         </div>
 
+        
+
     </main>
     <!--main app-->
     <script type="module" src="./main.js"></script>
     <script type="module">
         import { showVisitorsUI } from './main.js';
         document.addEventListener('load', showVisitorsUI());
+
+        //document.addEventListener('load', startExport());
     </script>
+
+
 
 
     

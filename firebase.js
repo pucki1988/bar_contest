@@ -6,7 +6,7 @@ import { getAuth, signInWithEmailAndPassword,signOut } from "https://www.gstatic
 import { collection, query, where, onSnapshot, getDocs, orderBy, updateDoc,doc,increment,serverTimestamp,addDoc,getDoc,getCountFromServer,limit,deleteDoc  } from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"
 
 
-import { teamUI, teamAdminUI, drinkUI,loginUI, visitorCountUI,visitorListUI } from './main.js';
+import { teamUI, teamAdminUI, drinkUI,loginUI, visitorCountUI,visitorListUI,exportVisitorList } from './main.js';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -237,6 +237,21 @@ export async function getVisitorsList(){
   });
 
   visitorListUI();
+}
+
+export async function getVisitorsListExport(){
+  const q = query(collection(db, "Visitor"), orderBy("checkIn", "desc"));
+  visitors.length=0;
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((a) => {
+
+    var dat=new Date(a.data().checkIn.toMillis())
+
+
+    visitors.push({checkIn: dat.toLocaleString()})
+  });
+
+  exportVisitorList();
 }
 
 

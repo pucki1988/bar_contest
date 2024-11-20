@@ -1,10 +1,12 @@
-import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout,addTeam,visitorCount,plusVisitor,minusVisitor,visitors, getVisitorsCount,getVisitorsList } from './firebase.js';
+import { showTeams,teams,updateDrinkCounter,showDrinks,drinks,login,logout,addTeam,visitorCount,plusVisitor,minusVisitor,visitors, getVisitorsCount,getVisitorsList, getVisitorsListExport } from './firebase.js';
 
 
 export function showTeamsUI(admin){
   document.addEventListener('load', showTeams(admin),showDrinks(admin));
 }
 
+
+document.getElementById("export-csv").addEventListener('click', ()=>{getVisitorsListExport()});
 
 
 export function showVisitorsUI(){
@@ -260,6 +262,28 @@ export async function visitorListUI(){
 
 
 }
+
+
+
+export async function exportVisitorList(){
+
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Nr;Zeitpunkt" + "\r\n";
+  var counter=1;
+  visitors.forEach((doc) =>  {
+    csvContent += counter + ";" + doc.checkIn + "\r\n";
+    counter ++;
+  });
+
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "besucher.csv");
+  document.body.appendChild(link); // Required for FF
+
+  link.click(); // This will download the data file named "my_data.csv".
+}
+
 
 
 
